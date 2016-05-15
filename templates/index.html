@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+		<title>Success</title>
+		<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ninjas_stylesheet.css') }}"> -->
+	</head>
+<body>
+	<h1>Email Addresses entered:</h1>
+  		{% for email in emails: %}
+		    <p>Email: {{email['email']}}</p>
+		    <p>created at: {{email['created_at']}}</p>
+		    <a href='/delete/{{email["id"]}}'>delete</a>
+    			<hr>
+  		{% endfor %}
+  		{% with errors = get_flashed_messages(category_filter=["error"]) %}
+				{% if errors %}
+		  	<ul>
+  				{%- for msg in errors %}
+    				<li>{{ msg }}</li>
+    					{% endfor %}
+ 			 </ul>
+				{% endif %}
+			{% endwith %}
+	
+
+			{% with success = get_flashed_messages(category_filter=["true"]) %}
+  				{% if success %}
+    		<ul>
+    			{% for msg in success %}
+      			<li>{{ msg }}</li>
+    				{% endfor %}
+    		</ul>
+  				{% endif %}
+				{% endwith %}
+
+	<h2>Add a Friend</h2>
+	<form action='/create' method='POST'>
+	<label for="Email">Email:<input type="text" name="email" id="email"></label>
+	<label for="Password">Password:<input type="password" name="password" id="password"></label>
+	<label for="Confirm Password">Confirm Password:<input type="password" name="confirm_password" id="confirm_password"></label>
+	<input type="submit" value="Add">
+		</form>
+		<a href='/reset'>reset</a>
+</body>
+</html>
